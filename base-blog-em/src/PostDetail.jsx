@@ -27,6 +27,7 @@ export function PostDetail({ post }) {
   // replace with useQuery
   const { data, isLoading, isError, error } = useQuery(["comments",post.id], ()=>fetchComments(post.id));
   const deleteMutaion = useMutation(()=> deletePost(post.id));
+  const updateMutaion = useMutation(()=> updatePost(post.id));
 
   if(isLoading){
     return <div>loading...</div>
@@ -51,7 +52,16 @@ export function PostDetail({ post }) {
       {
         deleteMutaion.isSuccess && <p>Success deleting the post..</p>
       }
-      <button>Update title</button>
+      <button onClick={()=> updateMutaion.mutate()}>Update title</button>
+      {
+        updateMutaion.isError && <p>Error updating the post</p>
+      }
+      {
+        updateMutaion.isLoading && <p>updating the post..</p>
+      }
+      {
+        updateMutaion.isSuccess && <p>Success updating the post..</p>
+      }
       <p>{post.body}</p>
       <h4>Comments</h4>
       {data.map((comment) => (
