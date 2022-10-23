@@ -26,10 +26,13 @@ export function Posts() {
   },[currentPage,queryClient]);
 
   // replace with useQuery
-  const { data,isLoading } = useQuery(["posts",currentPage],()=> fetchPosts(currentPage),{staleTime:2000});
+  const { data,isLoading, isFetching } = useQuery(["posts",currentPage],()=> fetchPosts(currentPage),{staleTime:2000});
   if(isLoading){
     return <div>loading...</div>
   }
+  // if(isFetching){
+  //   return <div>fetching...</div>
+  // }
 
   return (
     <>
